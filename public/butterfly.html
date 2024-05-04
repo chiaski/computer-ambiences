@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Butterfly</title>
+  <script src="assets/socket.io.js"></script>
+  <script src="assets/jquery.min.js"></script>
+  <script src="assets/world.js"></script>
+  
+  <link rel="stylesheet" href="./styling/s.css" type="text/css" />
+  <link rel="stylesheet" href="./styling/objects.css" type="text/css" />
+  <style type="text/css">
+    
+    /* Adjust the effects of your object... */
+  
+  
+  </style>
+  
+<script type="text/javascript">
+var Identity = "butterfly";
+</script>
+</head>
+<body>
+<main>
+
+  <audio loop>
+    <source src="sounds/butterfly.wav">
+  </audio>
+  <div id="title"><h1>Butterfly</h1></div>
+  
+
+  <div id="object">
+    <img src="images/butterfly.gif">
+  </div>
+  
+  <div id="actions">
+    <button action="flutter" value="8">Flutter</button>
+    <br>
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
+  </div>
+  <div class="caption"></div>
+
+
+</main>
+  
+  
+
+  
+<!--  MODIFY THE OBJECT HERE... -->
+<script type="text/javascript">
+// Specify range of where object can appear
+let LeftMin = 0; let LeftMax = 50;
+let TopMin = 40; let TopMax = 75;
+  
+  
+// My object's actions...
+var Actions = {
+  "playbafck": function(intensity){
+    let currentRate = $("audio")[0].playbackRate;    
+    $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
+  },
+  "flutter": function(intensity){
+    // When raining, play for val seconds
+      $("audio")[0].play();
+    
+    setTimeout(function(){
+      $("audio")[0].pause();
+        updateAudio();
+    }, parseFloat(intensity) * 1000);
+    
+  }
+  
+}
+  
+  
+  
+// What affects my object...
+  
+
+
+
+</script>
+<script src="object.js"></script>
+  
+</body>
+</html>

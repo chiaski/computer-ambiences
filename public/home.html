@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <script src="assets/socket.io.js"></script>
+  <script src="assets/jquery.min.js"></script>
+  <script src="assets/world.js"></script>
+  
+  <link rel="stylesheet" href="./styling/s.css" type="text/css" />
+  <link rel="stylesheet" href="./styling/objects.css" type="text/css" />
+  <style type="text/css">
+    
+    /* Adjust the look of your object, if you like... */
+  
+  
+  </style>
+
+  <!--  Update this and give your object a name -->
+  <script type="text/javascript">
+  var Identity = "home";
+  </script>
+</head>
+  
+<!-- Content written out in the page  -->
+<body>
+<main>
+
+  <div id="toggleAudio">♪</div>
+  <div id="title"><h1>Home </h1></div>
+  
+  
+  <audio loop>
+    <source src="sounds/home_guitar.wav">
+  </audio>
+  
+  
+  <div id="object">
+    <img src="images/home.gif">
+  </div>
+  
+  <div id="actions">
+    <button action="live" value="24">Live</button>
+    <button action="rise" value="0.1">Rise</button>
+    
+    <br>
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
+  </div>
+
+  
+  <div id="caption"></div>
+</main>
+  
+  
+
+  <script src="object.js"></script>
+  
+<!--  YOUR CODE GOES HERE... -->
+<script type="text/javascript">
+// Specify range of where object can appear
+let LeftMin = 10; let LeftMax = 90;
+let TopMin = 55; let TopMax = 80;
+
+// What reactions will take effect, and what happens?
+
+  
+var Actions = {
+  "live": function(intensity){
+    
+    write("The sun shines.");
+    
+    // When raining, play for val seconds
+      $("audio")[0].play();
+    
+    setTimeout(function(){
+      $("audio")[0].pause();
+        updateAudio();
+    }, parseFloat(intensity) * 1000);
+    
+  },
+  "rise": function(intensity){
+    
+    let currScale =  parseFloat(($('#object').attr('style') || '').match(/scale\s*\(([^)]+)\)/)?.[1]?.trim()) || 1;
+                                
+      console.log(intensity);
+                                
+    $("#object").css("transform", "scale(" + (currScale + parseFloat(intensity)) +")")
+    
+  },
+  
+  
+};
+
+
+</script>
+</body>
+</html>

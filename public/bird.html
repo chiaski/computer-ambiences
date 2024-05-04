@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bird</title>
+  <script src="assets/socket.io.js"></script>
+  <script src="assets/jquery.min.js"></script>
+  <script src="assets/world.js"></script>
+  
+  <link rel="stylesheet" href="./styling/s.css" type="text/css" />
+  <link rel="stylesheet" href="./styling/objects.css" type="text/css" />
+  <style type="text/css">
+    
+    /* Adjust the effects of your object... */
+  
+  
+  </style>
+  
+<script type="text/javascript">
+var Identity = "bird";
+</script>
+</head>
+<body>
+<main>
+
+  
+  <audio loop>
+    <source src="sounds/bird.wav">
+  </audio>
+  
+
+  <div id="title"><h1>Bird</h1></div>
+  
+  
+  
+  <div id="object">
+    <img src="images/bird.gif">
+  </div>
+  
+  <div id="actions">
+    <button action="chirp" value="15">Chirp</button>
+    <button action="rise" value=".1">Rise</button>
+  <br>
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.3"> <span volume>1</span>
+  </div>
+  
+  <div id="caption"></div>
+  <div id="toggleAudio">♪</div>
+
+
+</main>
+  
+  
+
+  <script src="object.js"></script>
+  
+<!--  YOUR CODE GOES HERE... -->
+<script type="text/javascript">
+// Specify range of where object can appear
+let LeftMin = 0; let LeftMax = 90;
+let TopMin = 10; let TopMax = 30;
+
+// What reactions will take effect, and what happens?
+
+  
+var Actions = {
+  "chirp": function(intensity){
+    // When raining, play for val seconds
+      $("audio")[0].play();
+    
+    setTimeout(function(){
+      $("audio")[0].pause();
+        updateAudio();
+    }, parseFloat(intensity) * 1000);
+    
+  },
+  "rise": function(intensity){
+    
+    let currScale =  parseFloat($('#object').css('transform').match(/scale\(([^)]+)\)/)?.[1]) || 1;
+                                
+    $("#object").css("transform", "scale(" + currScale + parseFloat(intensity) +")")
+    
+  },
+  
+  
+};
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+:root {
+  
+  
+}
+
+#title{
+//  position: fixed;
+  h1{
+  font-weight: normal;
+    letter-spacing: -.5px;
+    margin: 0;
+    font-size: 1rem;
+  }
+}
+
+main{
+  outline: 1px solid red;
+}
+
+
+[volume]{
+  font-family: molocatnospace;
+  display: inline-block; width: 20px;
+  font-size: .7rem;
+  transform: translateY(-4px);
+}

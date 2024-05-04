@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap");
+body {
+  font-family: "Times New Roman";
+  letter-spacing: -1%;
+}
+
+main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+#object {
+  width: 250px;
+  height: 200px;
+  max-width: 60vw;
+  max-height: 50vh;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+#object img {
+  object-fit: contain;
+  height: 150px;
+  max-height: 100%;
+}
+
+#actions {
+  margin: 1rem auto;
+  text-align: center;
+}
+#actions a {
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 2rem;
+  letter-spacing: -0.25px;
+}
+#actions a:hover {
+  font-style: italic;
+}
+#actions button {
+  font-size: 0.9rem;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  background: none;
+  border: 0;
+  font-family: monospace;
+  cursor: pointer;
+}
+#actions button:hover {
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.42);
+}
+
+#toggleAudio {
+  position: fixed;
+  bottom: 0;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=s.css.map */

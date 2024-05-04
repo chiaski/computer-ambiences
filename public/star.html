@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star</title>
+  <script src="assets/socket.io.js"></script>
+  <script src="assets/jquery.min.js"></script>
+  <script src="assets/world.js"></script>
+  
+  <link rel="stylesheet" href="./styling/s.css" type="text/css" />
+  <link rel="stylesheet" href="./styling/objects.css" type="text/css" />
+  <style type="text/css">
+    
+    /* Adjust the effects of your object... */
+  
+  
+  </style>
+  
+<script type="text/javascript">
+var Identity = "star";
+</script>
+</head>
+<body>
+<main>
+  
+  
+  <audio loop>
+    <source src="sounds/star_glitch.wav">
+  </audio>
+  
+  
+  <div id="caption"></div>
+  <div id="toggleAudio">♪</div>
+  <div id="title"><h1>Star</h1></div>
+  
+
+  <div id="object">
+    <img src="images/star.gif">
+  </div>
+  
+  <div id="actions">
+    <button action="shine" value="37">Shine</button><br>
+    <button action="fly" value="3">Fly</button>
+    <br>
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
+  </div>
+
+
+</main>
+  
+  
+
+  <script src="object.js"></script>
+  
+<!--  YOUR CODE GOES HERE... -->
+<script type="text/javascript">
+// Specify range of where object can appear
+let LeftMin = 0; let LeftMax = 95;
+let TopMin = 20; let TopMax = 35;
+
+// What reactions will take effect, and what happens?
+
+  
+var Actions = {
+  "shine": function(intensity){
+    // When raining, play for val seconds
+      $("audio")[0].play();
+    $("audio")[0].volume = 0.5;
+    
+    setTimeout(function(){
+      $("audio")[0].pause();
+        updateAudio();
+    }, parseFloat(intensity) * 1000);
+    
+  },
+  "fly": function(intensity){
+    $("#object").css(`filter`, `hue-rotate(${randInt(0,300)}deg)`);
+  }
+  
+  
+};
+
+
+
+</script>
+</body>
+</html>
