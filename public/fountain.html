@@ -10,7 +10,7 @@
   
   <link rel="stylesheet" href="./styling/s.css" type="text/css" />
   <link rel="stylesheet" href="./styling/objects.css" type="text/css" />
-  <style type="text/css">
+    <style type="text/css">
     
     /* Adjust the effects of your object... */
   
@@ -21,68 +21,123 @@
 var Identity = "fountain";
 </script>
 </head>
+
+<!-- Content written out in the page  -->
 <body>
 <main>
+
   
-  
+ 
+  <!-- SOUND FILE -->
   <audio loop>
     <source src="sounds/synth_chords.wav">
   </audio>
   
-  
-  <div id="caption"></div>
-  <div id="toggleAudio">♪</div>
-  <div id="title"><h1>Fountain</h1></div>
-  
 
+  <!-- IMAGE -->
   <div id="object">
     <img src="images/fountain.gif">
   </div>
   
+  <!-- CONTROLS FOR MY OBJECT -->
   <div id="actions">
-    <button action="sing" value="40">Sing</button><br>
-    <button action="fly" value="3">Fly</button>
-    <br>
-    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
-  </div>
+    
+    <!--   Plays the sound for value seconds  -->
+    <button action="playNtimes" value="3">Glisten</button>
+    
+    ·
 
+    <!--   Adjusts the tempo/speed  -->
+    <button action="tempo" value="-0.05">Slow</button>
+    <button action="tempo" value="+0.05">Speed</button>
+    
+    
+
+    <!--  Volume slider  -->
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.5"> <span volume>1</span>
+    
+
+  </div>
+  
+  
+  
+  <div class="caption"></div>
 
 </main>
   
-  
 
-  <script src="object.js"></script>
-  
-<!--  YOUR CODE GOES HERE... -->
+<!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
 // Specify range of where object can appear
 let LeftMin = 0; let LeftMax = 90;
 let TopMin = 70; let TopMax = 80;
-
-// What reactions will take effect, and what happens?
-
+  
   
 var Actions = {
-  "sing": function(intensity){
-    // When raining, play for val seconds
-      $("audio")[0].play();
-    $("audio")[0].volume = 0.5;
+  
+  // Playing the sound
+  "play": function(seconds){
+    // Play for N seconds
+    $("audio")[0].play();
     
     setTimeout(function(){
       $("audio")[0].pause();
         updateAudio();
-    }, parseFloat(intensity) * 1000);
+    }, parseFloat(seconds) * 1000);
     
   },
-  "fly": function(intensity){
+  "playNtimes": function(times){
+    // Get the duration of the object and play it X times
+    let seconds = $("audio")[0].duration  * times;
+      Actions.play(seconds);
+  },
+  
+  // Change the tempo
+  "tempo": function(intensity){
+    let currentRate = $("audio")[0].playbackRate;    
+    $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
+  },
+  
+  // Change the sound file
+  "changeAudio": function(song){
+    changeAudio(song);
+  },
+
+  // Change the color of the object
+  "changeHue": function(intensity){
+    // Changes the color of the object
     $("#object").css(`filter`, `hue-rotate(${randInt(0,300)}deg)`);
+  },
+  // copy the window
+  "duplicate": function(n){
+    for(let i = 0; i<n;i++){
+      window.open(window.location.href, "_blank", `popup, width=180, height=180, top=${randInt(0,screen.height)},left=${randInt(0,screen.width)}`);
+    }
   }
   
   
-};
+}
+  
+  
+  
+// What affects my object...
+     
+var Reactions = {
+  "flower": {
+    "play": function(){
+      Actions.play(12);
+    }
+  }
+}
+
+
 
 
 
 </script>
+<script src="object.js"></script>
+  
 </body>
 </html>
+
+

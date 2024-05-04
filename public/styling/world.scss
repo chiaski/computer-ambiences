@@ -43,3 +43,16 @@ bottom: 0;
 //  span::before{content:" [ "; transform: scale(1.2);}
 //  span::after{content:" ] ";transform: scale(1.2);}
 }
+
+
+#CLICK{
+  position: fixed;
+  top: 40%;
+  pointer-events: none;
+  font-size: 1rem;
+  text-align: center;
+  z-index: 100;
+  width: 100%;
+
+  
+}

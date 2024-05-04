@@ -46,11 +46,15 @@
     <!--   Plays the sound for value seconds  -->
     <button action="play" value="40">Ebb</button>
     <button action="playNtimes" value="2">Flow</button>
-    <br>
+    
+    ·
 
     <!--   Adjusts the tempo/speed  -->
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
+    
+
+    
     <br>
     
     <!--  Volume slider  -->
@@ -68,14 +72,10 @@
 <script type="text/javascript">
 // Specify range of where object can appear
 let LeftMin = 0; let LeftMax = 95;
-let TopMin = 90; let TopMax = 100;
+let TopMin = 88; let TopMax = 90;
   
   
 var Actions = {
-  "tempo": function(intensity){
-    let currentRate = $("audio")[0].playbackRate;    
-    $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
-  },
   "play": function(seconds){
     // Play for N seconds
       $("audio")[0].play();
@@ -97,6 +97,20 @@ var Actions = {
         updateAudio();
     }, parseFloat(seconds) * 1000);
     
+  },
+  "tempo": function(intensity){
+    let currentRate = $("audio")[0].playbackRate;    
+    $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
+  },
+  
+  // visuals
+  "grow": function(intensity){
+    
+    let currScale =  parseFloat(($('#object').attr('style') || '').match(/scale\s*\(([^)]+)\)/)?.[1]?.trim()) || 1;
+                                
+      console.log(intensity);
+                                
+    $("#object").css("transform", "scale(" + (currScale + parseFloat(intensity)) +")")
     
   }
   
@@ -105,7 +119,24 @@ var Actions = {
   
   
 // What affects my object...
-  
+    
+var Reactions = {
+  "angel": {
+    "play": function(){
+      // If the angel plays, play for 3 seconds
+      Actions.play(3);
+      
+    }
+  },
+  "raincloud": {
+    "play": function(){
+      // If the rain plays, grow
+      Actions.grow(0.05);
+      
+    }
+  }
+}
+
 
 
 

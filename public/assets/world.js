@@ -7,30 +7,8 @@ function randInt(min, max) {  return Math.floor(Math.random() * (max - min + 1) 
 function pick(arr) { return arr[(Math.random() * arr.length) | 0]; }
 
 
-
 function write(text) {
-  let SPEED = 80;
-  var i = 0;
-  var $caption = $('#caption');
-  var $spans = $caption.children('span');
-  var interval;
-
-  // Clear any existing typewriter interval
-  $caption.empty();
-  clearInterval(interval);
-
-  interval = setInterval(function() {
-    if (i < text.length) {
-      if ($spans.eq(i).length) {
-        $spans.eq(i).text(text.charAt(i));
-      } else {
-        $caption.append('<span>' + text.charAt(i) + '</span>');
-      }
-      i++;
-    } else {
-      clearInterval(interval);
-    }
-  }, SPEED);
+  $(".caption").html(text);
 }
 
 

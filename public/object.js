@@ -28,6 +28,16 @@ function updateVisuals(){
   
 }
 
+function changeAudio(song){
+  $('audio').attr('src', song);
+  socket.emit('changeAudio', song);
+}
+
+function changeImage(image){
+  $('#object img').attr('src', image);
+  socket.emit('changeImage', image);
+}
+
 $(document).on("input", "#volume", function(){
   let volume = $(this).val();
   $("audio")[0].volume = volume;
@@ -45,13 +55,14 @@ $(document).on("click", "[action]", function(){
 //  interact(action, intensity);
   
   if(Actions && Actions[action]){
+    write("You " + $(this).html().toLowerCase() + ": " + action);
+    
     Actions[action](intensity);
+    // update details accordingly
+    updateAudio();
+    updateVisuals();
   }
 
-  // update details accordingly
-  
-  updateAudio();
-  updateVisuals();
   
   socket.emit('sendData', {
     action: action, intensity: intensity
@@ -67,8 +78,10 @@ socket.on('receiveData', (data) => {
   
   console.log(`You are a ${Identity} responding to ${data.action}.`)
   
-  if(Reactions && Reactions[data.action]){
-    Reactions[data.action](data.intensity);
+  if(Reactions && Reactions[data.identity] && Reactions[data.identity][data.action]){
+    Reactions[data.identity][data.action](data.intensity);
+    
+    write("You are affected by a " + data.identity + "'s "  + data.action);
     
     updateAudio();
     updateVisuals();
@@ -84,7 +97,8 @@ $(document).ready(function(){
 
   let audioSource = $('audio').find('source').attr('src');
 
-  let imageSource = $('#object img').attr('src').replace('images/', '');
+//  let imageSource = $('#object img').attr('src').replace('images/', '');
+  let imageSource = $('#object img').attr('src');
   
   let positionLeft = randInt(LeftMin, LeftMax);
   let positionTop = randInt(TopMin, TopMax);

@@ -21,73 +21,143 @@
 var Identity = "bird";
 </script>
 </head>
+
+<!-- Content written out in the page  -->
 <body>
 <main>
 
   
+ 
+  <!-- SOUND FILE -->
   <audio loop>
     <source src="sounds/bird.wav">
   </audio>
   
 
-  <div id="title"><h1>Bird</h1></div>
-  
-  
-  
+  <!-- IMAGE -->
   <div id="object">
     <img src="images/bird.gif">
   </div>
   
+  <!-- CONTROLS FOR MY OBJECT -->
   <div id="actions">
-    <button action="chirp" value="15">Chirp</button>
-    <button action="rise" value=".1">Rise</button>
-  <br>
-    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.3"> <span volume>1</span>
+    
+    <!--   Plays the sound for value seconds  -->
+    <button action="play" value="18">Chirp</button>
+    
+    ·
+
+    <!--   Adjusts the tempo/speed  -->
+    <button action="tempo" value="-0.05">Slow</button>
+    <button action="tempo" value="+0.05">Speed</button>
+    
+    ·
+    
+    <!--  These are a combination of an image and audio change -->
+    <button action="birdCount" value="1">One</button>
+    <button action="birdCount" value="many">Flock</button>
+    
+    ·
+    
+    <button action="changeHue">Shine</button>
+    
+    <br>
+    <!--  Volume slider  -->
+    <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
+    
+
   </div>
   
-  <div id="caption"></div>
-  <div id="toggleAudio">♪</div>
-
+  
+  
+  <div class="caption"></div>
 
 </main>
   
-  
 
-  <script src="object.js"></script>
-  
-<!--  YOUR CODE GOES HERE... -->
+<!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
 // Specify range of where object can appear
-let LeftMin = 0; let LeftMax = 90;
-let TopMin = 10; let TopMax = 30;
-
-// What reactions will take effect, and what happens?
-
+let LeftMin = 0; let LeftMax = 60;
+let TopMin = 0; let TopMax = 20;
+  
   
 var Actions = {
-  "chirp": function(intensity){
-    // When raining, play for val seconds
+  
+  // Playing the sound
+  "play": function(seconds){
+    // Play for N seconds
       $("audio")[0].play();
     
     setTimeout(function(){
       $("audio")[0].pause();
         updateAudio();
-    }, parseFloat(intensity) * 1000);
+    }, parseFloat(seconds) * 1000);
     
   },
-  "rise": function(intensity){
-    
-    let currScale =  parseFloat($('#object').css('transform').match(/scale\(([^)]+)\)/)?.[1]) || 1;
-                                
-    $("#object").css("transform", "scale(" + currScale + parseFloat(intensity) +")")
-    
+  "playNtimes": function(times){
+    // Get the duration of the object and play it X times
+    let seconds = $("audio")[0].duration * times;
+    Actions.play(seconds);
   },
   
+  // Change the tempo
+  "tempo": function(intensity){
+    let currentRate = $("audio")[0].playbackRate;    
+    $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
+  },
   
-};
+  // Change the sound file
+  "changeAudio": function(song){
+    changeAudio(song);
+  },
+  // Change the image file
+  "changeImage": function(image){
+    changeImage(image);
+  },
+
+  // Change the color of the object
+  "changeHue": function(intensity){
+    // Changes the color of the object
+    $("#object").css(`filter`, `hue-rotate(${randInt(0,300)}deg)`);
+  },
+  
+  // bird bird
+  "birdCount": function(howmany){
+    if(howmany == "1"){
+      Actions.changeAudio("sounds/bird.wav");
+      Actions.changeImage("images/bird.gif");
+    }
+    
+    if(howmany == "many"){
+      Actions.changeAudio("sounds/birds.wav");
+      Actions.changeImage("images/bird_flock.gif");
+    }
+  }
+  
+  
+}
+  
+  
+  
+// What affects my object...
+     
+var Reactions = {
+//  "flower": {
+//    "play": function(){
+//      Actions.play(3);
+//    }
+//  }
+}
+
+
 
 
 
 </script>
+<script src="object.js"></script>
+  
 </body>
 </html>
+
+

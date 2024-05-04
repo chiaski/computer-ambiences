@@ -86,9 +86,9 @@ io.on('connection', (socket) => {
       updateConnections();
     }
   });
-  // AUDIO
+  
 
-  socket.on('changeSound', (audio) => {
+  socket.on('changeAudio', (audio) => {
     if (socket.user) {
       socket.user.audio = audio;
       updateConnections();
@@ -100,6 +100,13 @@ io.on('connection', (socket) => {
   socket.on('updateVisuals', (styles) => {
     if (socket.user) {
       socket.user.styles = styles;
+      updateConnections();
+    }
+  });
+  
+  socket.on('changeImage', (image) => {
+    if (socket.user) {
+      socket.user.image = image;
       updateConnections();
     }
   });

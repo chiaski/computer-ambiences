@@ -46,6 +46,11 @@ function write(text) {
 
 var clicked = false;
 
+$(document).one("click", function(){
+  
+  $("#CLICK").remove();
+  
+});
 //$(document).click(function() {
 //  if (!clicked) {
 //    playAllAudio();
@@ -66,7 +71,7 @@ var clicked = false;
 let Connections = [];
 
 socket.on('connectionsUpdate', function(connections) {
-  console.log("update", connections);
+//  console.log("update", connections);
 //  updateConnections(connections);
   // handle
   Connections = connections;
@@ -75,13 +80,22 @@ socket.on('connectionsUpdate', function(connections) {
    if($("#" + conn.id).length){
 //    console.log("exists");
      dAudio = $(`#${conn.id} audio`);
-
      
-//     if( (conn.audio.startsWith("http://") || conn.audio.startsWith("https://") ? conn.audio : "../sounds/" + conn.audio) !== $(dAudio).attr("src")){
-//       
-//       console.log("changing source");
-//          $(dAudio).attr("src", `../sounds/${conn.audio}`);
-//     }
+     // check if audio needs replacing
+     let checkAudio = conn.audio.startsWith("http://") || conn.audio.startsWith("https://") ? conn.audio : "../" + conn.audio;
+     
+     if( checkAudio !== $(dAudio).attr("src")){
+       console.log("changing source");
+        $(dAudio).attr("src", `${checkAudio}`);
+     }
+     
+     // check if image needs replacing
+     let checkImage =  conn.image.startsWith("http://") || conn.image.startsWith("https://") ? conn.image : "../" + conn.image;
+     
+     if( checkImage !== $("#" + conn.id + " img").attr("src")){
+       console.log("changing source");
+         $("#" + conn.id + " img").attr("src", `${checkImage}`);
+     }
      
      
     dAudio[0].playbackRate = conn.audioState.playbackRate;
@@ -128,9 +142,9 @@ socket.on('removeConnection', function(connection) {
 
 function makeDiv(conn){
   
+  let myImage = conn.image.startsWith("http://") || conn.image.startsWith("https://") ? conn.image : "../" + conn.image;
   
-  
-  let d = $(`<span object><img src='../images/${conn.identity}.gif'></span>`)
+  let d = $(`<span object><img src='${myImage}'></span>`)
   .attr("id", conn.id)
   .attr("identity", conn.identity)
   .css("left", `${conn.position.left}%`)

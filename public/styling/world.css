@@ -40,4 +40,14 @@ audio {
   padding: 0.05rem;
 }
 
+#CLICK {
+  position: fixed;
+  top: 40%;
+  pointer-events: none;
+  font-size: 1rem;
+  text-align: center;
+  z-index: 100;
+  width: 100%;
+}
+
 /*# sourceMappingURL=world.css.map */
