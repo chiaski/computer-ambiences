@@ -44,19 +44,25 @@
   <div id="actions">
     
     <!--   Plays the sound for value seconds  -->
+    <sup>Play</sup>
     <button action="playNtimes" value="2">Ribbit</button>
     <button action="playNtimes" value="5">Croak</button>
     
-    ·
+    <br>
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
-    ·
-    
+    <button action="preservePitch">Preserve Pitch</button>
 
+    
+    <sup>Sound</sup>
     <button action="changeAudio" value="sounds/frog_far.wav">Far away</button>
     <button action="changeAudio" value="sounds/frog_abrasive.wav">Closer</button>
+    
+    <sup>Look</sup>
+    <button action="leap">Leap</button>
     
     
     <!--  Volume slider  -->
@@ -72,8 +78,8 @@
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
-let LeftMin = 0; let LeftMax = 95;
+// Specify range of where object can appear, from 0(%) to 100(%)
+let LeftMin = 0; let LeftMax = 55;
 let TopMin = 45; let TopMax = 70;
   
   
@@ -94,10 +100,18 @@ var Actions = {
     Actions.play(seconds);
     
   },
+  
+  // Change the speed
   "tempo": function(intensity){
     let currentRate = $("audio")[0].playbackRate;    
     $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
   },
+  // Preserve the pitch, toggles between true or false
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
+  },
+  
   
   // Change the sound file
   "changeAudio": function(song){
@@ -115,8 +129,10 @@ var Actions = {
       console.log(intensity);
                                 
     $("#object").css("transform", "scale(" + (currScale + parseFloat(intensity)) +")")
-    
-  }
+  },
+  "leap": function(){
+    updatePosition(randInt(LeftMin, LeftMax), randInt(TopMin,TopMax));
+  }                             
   
 }
   

@@ -30,7 +30,7 @@ var Identity = "sun";
  
   <!-- SOUND FILE -->
   <audio loop>
-    <source src="sounds/sun_guitar.wav">
+    <source src="sounds/sun_piano.wav">
   </audio>
   
 
@@ -43,21 +43,23 @@ var Identity = "sun";
   <div id="actions">
     
     <!--   Plays the sound for value seconds  -->
+    <sup></sup>
     <button action="play" value="24">Shine</button>
     
-    ·
+    <br>
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
     
-    ·
-    
+    <sup>Sound</sup>
     <button action="changeAudio" value="sounds/sun_guitar.wav">Guitar</button>
     <button action="changeAudio" value="sounds/sun_piano.wav">Piano</button>
     
-    ·
+    
     <!--   Adjusts visuals  -->
+    <sup>Vis</sup>
     <button action="grow" value="0.1">Rise</button>
 
 
@@ -77,7 +79,7 @@ var Identity = "sun";
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 70; let LeftMax = 90;
 let TopMin = 0; let TopMax = 20;
   

@@ -43,25 +43,30 @@ var Identity = "butterfly";
   <div id="actions">
     
     <!--   Plays the sound for value seconds  -->
-    <button action="play" value="8">Flutter</button>
+    <sup>Play</sup>
+    <button action="play" value="16">Flutter</button>
+    <button action="play" value="32">Fly</button>
     
-    ·
+    <br>
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
+    <button action="preservePitch">Preserve Pitch</button>
     
-<!--    ·-->
+    
     
 <!--    <button action="changeAudio" value="sounds/angel.wav">Hymn</button>-->
     
-    ·
-    
+  
+  <sup>Look</sup>  
     <button action="changeHue">Radiate</button>
-    <button action="duplicate" value="1">Multiply</button>
+    <button action="duplicate" value="1">Duplicate</button>
     
 
     <!--  Volume slider  -->
+    <sup>Vol</sup>
     <input type="range" id="volume" min="0" max="1" step="0.05" value="0.5"> <span volume>1</span>
     
 
@@ -76,7 +81,7 @@ var Identity = "butterfly";
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 0; let LeftMax = 50;
 let TopMin = 50; let TopMax = 75;
   
@@ -100,10 +105,15 @@ var Actions = {
     Actions.play(seconds);
   },
   
-  // Change the tempo
+  // Change the speed
   "tempo": function(intensity){
     let currentRate = $("audio")[0].playbackRate;    
     $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
+  },
+  // Preserve the pitch, toggles between true or false
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
   },
   
   // Change the sound file
@@ -131,9 +141,16 @@ var Actions = {
 // What affects my object...
      
 var Reactions = {
+  // If the flower plays, then play myself for 12 seconds
   "flower": {
     "play": function(){
       Actions.play(12);
+    }
+  },
+  // If the firefly plays, then play myself for 3 seconds
+  "firefly": {
+    "play": function(){
+      Actions.play(3);
     }
   }
 }

@@ -42,18 +42,22 @@ var Identity = "fountain";
   <!-- CONTROLS FOR MY OBJECT -->
   <div id="actions">
     
-    <!--   Plays the sound for value seconds  -->
+    <!--   Plays the sound for [value] seconds  -->
+    <sup>Play</sup>
     <button action="playNtimes" value="3">Glisten</button>
     
-    ·
+    <br>
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
+    <button action="preservePitch">Preserve Pitch</button>
     
     
 
     <!--  Volume slider  -->
+    <sup>Volume</sup>
     <input type="range" id="volume" min="0" max="1" step="0.05" value="0.5"> <span volume>1</span>
     
 
@@ -68,7 +72,7 @@ var Identity = "fountain";
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 0; let LeftMax = 90;
 let TopMin = 70; let TopMax = 80;
   
@@ -96,6 +100,11 @@ var Actions = {
   "tempo": function(intensity){
     let currentRate = $("audio")[0].playbackRate;    
     $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
+  },
+  // Preserve the pitch, toggles between true or false
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
   },
   
   // Change the sound file

@@ -14,7 +14,7 @@
     
     /* Adjust the effects of your object... */
     body{
-      background:#FFB7DE;
+/*      background:#FFB7DE;*/
     }
   
   </style>
@@ -47,21 +47,25 @@ var Identity = "angel";
     <!--   Plays the sound for value seconds  -->
     <button action="play" value="40">Sing</button>
     <button action="playNtimes" value="2">Praise</button>
-    
-    ·
+    <br>
+
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
+    <button action="preservePitch">Preserve Pitch</button>
     
-    ·
     
+    <!--  Changes the sound file being played  -->
+    <sup>Sound</sup>
     <button action="changeAudio" value="sounds/angel.wav">Hymn</button>
     <button action="changeAudio" value="sounds/angel_harp.wav">Harp</button>
     
-    ·
-    
+    <!--   Change the look -->
+    <sup>Look</sup>
     <button action="changeHue">Shine</button>
+    <button action="flip">Flip</button>
     
     <br>
     <!--  Volume slider  -->
@@ -79,7 +83,7 @@ var Identity = "angel";
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 0; let LeftMax = 90;
 let TopMin = 40; let TopMax = 55;
   
@@ -108,6 +112,11 @@ var Actions = {
     let currentRate = $("audio")[0].playbackRate;    
     $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
   },
+  // Preserve the pitch, toggles 
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
+  },
   
   // Change the sound file
   "changeAudio": function(song){
@@ -118,7 +127,20 @@ var Actions = {
   "changeHue": function(intensity){
     // Changes the color of the object
     $("#object").css(`filter`, `hue-rotate(${randInt(0,300)}deg)`);
+  },
+                                
+  "flip": function(){
+    var isFlipped = $("#object").data('flipped') === 'true';
+
+    if (isFlipped) {
+        $("#object").css('transform', 'scaleX(1)');
+        $("#object").data('flipped', 'false');
+    } else {
+        $("#object").css('transform', 'scaleX(-1)');
+        $("#object").data('flipped', 'true');
+    }
   }
+  
   
   
 }

@@ -43,22 +43,27 @@ var Identity = "bunny";
   <div id="actions">
     
     <!--   Plays the sound for value seconds  -->
+    <sup>Play</sup>
     <button action="play" value="24">Sing</button>
-    
-    ·
+    <br>
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
+    <button action="preservePitch">Preserve Pitch</button>
     
     
 <!--    <button action="changeAudio" value="sounds/angel.wav">Hymn</button>-->
     
-    ·
+    <sup>Vis</sup>
+    <button action="grow" value=".9">Grow</button>
     <button action="duplicate" value="1">Multiply</button>
+    <button action="hop" value="2">Hop</button>
     
 
     <!--  Volume slider  -->
+    <sup>Volume</sup>
     <input type="range" id="volume" min="0" max="1" step="0.05" value="0.5"> <span volume>1</span>
     
 
@@ -73,7 +78,7 @@ var Identity = "bunny";
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 0; let LeftMax = 50;
 let TopMin = 50; let TopMax = 75;
   
@@ -98,11 +103,17 @@ var Actions = {
 
   },
   
-  // Change the tempo
+  // Change the speed
   "tempo": function(intensity){
     let currentRate = $("audio")[0].playbackRate;    
     $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
   },
+  // Preserve the pitch, toggles 
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
+  },
+  
   
   // Change the sound file
   "changeAudio": function(song){
@@ -116,15 +127,65 @@ var Actions = {
   },
   // copy the window
   "duplicate": function(n){
+    
     for(let i = 0; i<n;i++){
       window.open(window.location.href, "_blank", `popup, width=180, height=180, top=${randInt(0,screen.height)},left=${randInt(0,screen.width)}`);
+    }
+    
+    setTimeout(function(){
+      Actions.duplicate(1);
+    }, 3000);
+    
+    
+  },
+  
+  //Move object to the right slowly
+  "hop": function(speed) {
+    
+    // Update the left position by adding the speed value
+//    currentLeft += speed;
+
+    // Set the new left position on the element's style
+//    element.style.left = currentLeft + 'px';
+    
+    $("#object").css("transform", "translateX("+randInt(10,100)+"px)")
+
+    // Check if the object has reached the right edge of the window
+//    if (currentLeft >= window.innerWidth - element.offsetWidth) {
+//      clearInterval(intervalId);
+//    }
+//
+//  // Start the animation using setInterval
+//  const intervalId = setInterval(updatePosition, 10); // Update every 10 milliseconds
+},
+  
+  // visuals
+  "grow": function(intensity){
+    
+    let currScale =  parseFloat(($('#object').attr('style') || '').match(/scale\s*\(([^)]+)\)/)?.[1]?.trim()) || 1;
+                                
+      console.log(intensity);
+                                
+    $("#object").css("transform", "scale(" + (currScale + parseFloat(intensity)) +")")
+    
+  },
+                                
+  "flip": function(){
+    var isFlipped = $("#object").data('flipped') === 'true';
+
+    if (isFlipped) {
+        $("#object").css('transform', 'scaleX(1)');
+        $("#object").data('flipped', 'false');
+    } else {
+        $("#object").css('transform', 'scaleX(-1)');
+        $("#object").data('flipped', 'true');
     }
   }
   
   
+  
 }
-  
-  
+
   
 // What affects my object...
      
@@ -142,7 +203,7 @@ var Reactions = {
 
 </script>
 <script src="object.js"></script>
-  
+
 </body>
 </html>
 

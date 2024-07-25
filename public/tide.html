@@ -44,17 +44,20 @@
   <div id="actions">
     
     <!--   Plays the sound for value seconds  -->
+    <sup>Play</sup>
     <button action="play" value="40">Ebb</button>
     <button action="playNtimes" value="2">Flow</button>
-    
-    ·
+<br>    
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
+    <button action="preservePitch">Preserve Pitch</button>
     
+    <sup>Visuals</sup>
+    <button action="flip">Flip</button>
 
-    
     <br>
     
     <!--  Volume slider  -->
@@ -70,9 +73,9 @@
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 0; let LeftMax = 95;
-let TopMin = 88; let TopMax = 90;
+let TopMin = 78; let TopMax = 82;
   
   
 var Actions = {
@@ -98,10 +101,18 @@ var Actions = {
     }, parseFloat(seconds) * 1000);
     
   },
+  
+  // Change the speed
   "tempo": function(intensity){
     let currentRate = $("audio")[0].playbackRate;    
     $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
   },
+  // Preserve the pitch, toggles 
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
+  },
+  
   
   // visuals
   "grow": function(intensity){
@@ -112,6 +123,18 @@ var Actions = {
                                 
     $("#object").css("transform", "scale(" + (currScale + parseFloat(intensity)) +")")
     
+  },
+                                
+  "flip": function(){
+    var isFlipped = $("#object").data('flipped') === 'true';
+
+    if (isFlipped) {
+        $("#object").css('transform', 'scaleX(1)');
+        $("#object").data('flipped', 'false');
+    } else {
+        $("#object").css('transform', 'scaleX(-1)');
+        $("#object").data('flipped', 'true');
+    }
   }
   
 }

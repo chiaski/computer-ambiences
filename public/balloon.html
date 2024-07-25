@@ -42,16 +42,20 @@ var Identity = "balloon";
   <div id="actions">
     
     <!--   Plays the sound for value seconds  -->
+    <sup>Play</sup>
     <button action="play" value="20">Float</button>
     
-    ·
+    <br>
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
+    <button action="preservePitch">Preserve Pitch</button>
     
     
     <!--  Volume slider  -->
+    <sup>Vol</sup>
     <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
   </div>
   
@@ -64,7 +68,7 @@ var Identity = "balloon";
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 0; let LeftMax = 80;
 let TopMin = 50; let TopMax = 75;
   
@@ -86,6 +90,17 @@ var Actions = {
     let seconds = $("audio")[0].duration * times;
     Actions.play(seconds);
     
+  },
+  
+  // Change the speed
+  "tempo": function(intensity){
+    let currentRate = $("audio")[0].playbackRate;    
+    $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
+  },
+  // Preserve the pitch, toggles 
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
   },
   
   // visuals

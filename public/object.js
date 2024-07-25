@@ -1,17 +1,41 @@
 
+let audio = $("audio")[0];
+
 // change a sound
+$("audio")[0].addEventListener("play", function(){
+   if (!$("audio")[0].paused) {
+        $("#object img").addClass("pulse")
+    }
+});
+
+$("audio")[0].addEventListener("pause", function(){
+   if ($("audio")[0].paused) {
+        $("#object img").removeClass("pulse")
+    }
+});
+
+$("audio")[0].addEventListener("ended", function(){
+   if ($("audio")[0].paused) {
+        $("#object img").removeClass("pulse")
+    }
+});
 
 
 function updateAudio(){
   
   let valplaybackRate = $("audio")[0].playbackRate;
+  let valpreservesPitch = $("audio")[0].preservesPitch;
   let valVolume = $("audio")[0].volume;
   let valPlaying = !$("audio")[0].paused;
+  
+  $("#volume").attr("value", audio.volume);
+  $("[volume]").html(audio.volume);
   
   console.log(valplaybackRate, valVolume, valPlaying);
   
   socket.emit('updateAudio', {
     playbackRate: valplaybackRate,
+    preservesPitch: valpreservesPitch,
     volume: valVolume,
     playing: valPlaying
   });
@@ -28,8 +52,21 @@ function updateVisuals(){
   
 }
 
+function updatePosition(x, y){
+  socket.emit('updatePosition', {x: x, y:y});
+}
+
+
 function changeAudio(song){
-  $('audio').attr('src', song);
+  
+  // so it doesnt pause 
+  if(!$("audio")[0].paused){
+    $('audio').attr('src', song);
+    $("audio")[0].play();
+  } else{
+    $('audio').attr('src', song);
+  }
+  
   socket.emit('changeAudio', song);
 }
 
@@ -43,6 +80,21 @@ $(document).on("input", "#volume", function(){
   $("audio")[0].volume = volume;
   $("[volume]").html(volume);
   updateAudio();
+  
+});
+
+$(document).on("click", "#object", function(){
+  let defaultLength = 32;
+  
+  // Play the sound when clicked
+  Actions.play(defaultLength);
+  
+  updateAudio();
+  updateVisuals();
+
+  socket.emit('sendData', {
+    action: "play", intensity: defaultLength
+  });
   
 });
 
@@ -91,10 +143,10 @@ socket.on('receiveData', (data) => {
 
 
 
+
 $(document).ready(function(){
 
   // change default volume
-
   let audioSource = $('audio').find('source').attr('src');
 
 //  let imageSource = $('#object img').attr('src').replace('images/', '');
@@ -118,12 +170,33 @@ $(document).ready(function(){
     audioState: {
         playing: false,
         playbackRate: 1,
+        preservesPitch: true,
         volume: volDefault
     }
   });
   
 });
 
+      
+function softenAudio() {
+  var currentVolume = audio.volume;
+  if (currentVolume > 0.01) {
+      audio.volume -= 0.005;
+      updateAudio();
+      setTimeout(softenAudio, 100); 
+  } else {
+      window.close();
+  }
+}
 
 
 // Additional keypresses to make performance more fun
+
+$(document).keydown(function(event){
+    if(event.shiftKey && event.which == 68){ // Shift + D
+      window.open(window.location.href, "_blank", `popup, width=190, height=200, top=${randInt(0,screen.height)},left=${randInt(0,screen.width)}`);
+    }
+    if(event.shiftKey && event.which == 69){ // Shift + E
+      softenAudio();
+    }
+});

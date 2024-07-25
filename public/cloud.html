@@ -43,23 +43,26 @@ var Identity = "cloud";
   <div id="actions">
     
     <!--   Plays the sound for value seconds  -->
+    <sup>Play</sup>
     <button action="play" value="32">Float</button>
+    <br>
     
-    ·
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
-    
-    ·
-    
+    <button action="preservePitch">Preserve Pitch</button>
+
+    <!--  Change the sound  -->
+    <sup>Sound</sup>
     <button action="changeAudio" value="sounds/cloud_1.wav">Cirrus</button>
     <button action="changeAudio" value="sounds/cloud_2.wav">Cumulus</button>
-    ·
-    <button action="changeHue">Shine</button>
+    
+<!--    <button action="changeHue">Shine</button>-->
     
     <br>
-    <!--  Volume slider  -->
+    <sup>Volume</sup>
     <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
     
 
@@ -74,7 +77,7 @@ var Identity = "cloud";
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 0; let LeftMax = 95;
 let TopMin = 0; let TopMax = 40;
   
@@ -103,6 +106,12 @@ var Actions = {
     let currentRate = $("audio")[0].playbackRate;    
     $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
   },
+  // Preserve the pitch, toggles 
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
+  },
+  
   
   // Change the sound file
   "changeAudio": function(song){

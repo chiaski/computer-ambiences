@@ -99,6 +99,7 @@ socket.on('connectionsUpdate', function(connections) {
      
      
     dAudio[0].playbackRate = conn.audioState.playbackRate;
+    dAudio[0].preservesPitch = conn.audioState.preservesPitch;
     dAudio[0].volume = conn.audioState.volume;
     if(conn.audioState.playing){
      dAudio[0].play(); 
@@ -109,6 +110,10 @@ socket.on('connectionsUpdate', function(connections) {
      if(conn.styles && conn.styles.length > 1){
         $("#" + conn.id).css(JSON.parse(conn.styles));
      }
+     
+     $("#" + conn.id)
+      .css("left", `${conn.position.left}%`)
+      .css("top", `${conn.position.top}%`)
      
      return;
      
@@ -152,19 +157,19 @@ function makeDiv(conn){
 
   // open window
 //  
-//  let vw = window.innerWidth;
-//  let vh = window.innerHeight;
-////  let vw = screen.width;
-////  let vh = screen.height;
-//
-//  let l = (vw * conn.position.left) / 100;
-//  let t = (vh * conn.position.top) / 100;
-//  
-//  console.log(vw, ":", l, "//", vh, ":", t)
-//  
-//  let w = window.open("o.html", "", `popup, width=${100}, height=${100+26}, top=${t + 65 + 88}, left=${l + 80}`);
-//  connectionsWindows.push({ id: conn.id, window: w });
-//  
+  let vw = window.innerWidth;
+  let vh = window.innerHeight;
+//  let vw = screen.width;
+//  let vh = screen.height;
+
+  let l = (vw * conn.position.left) / 100;
+  let t = (vh * conn.position.top) / 100;
+  
+  console.log(vw, ":", l, "//", vh, ":", t)
+  
+  let w = window.open("o.html", "", `popup, width=${100}, height=${100+26}, top=${t + 65 + 88}, left=${l + 80}`);
+  connectionsWindows.push({ id: conn.id, window: w });
+  
 //  
 //  let dContent = $(d).html();
 //  console.log(w, dContent);
@@ -192,6 +197,7 @@ function makeDiv(conn){
   $(dAudio).appendTo(d);
 
     dAudio[0].playbackRate = conn.audioState.playbackRate;
+    dAudio[0].preservesPitch = conn.audioState.preservesPitch;
     dAudio[0].volume = conn.audioState.volume;
     if(conn.audioState.playing){
      dAudio[0].play(); 

@@ -51,4 +51,20 @@ main {
   transform: translateY(-4px);
 }
 
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /*# sourceMappingURL=objects.css.map */

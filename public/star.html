@@ -42,25 +42,27 @@ var Identity = "star";
   <!-- CONTROLS FOR MY OBJECT -->
   <div id="actions">
     
-    <!--   Plays the sound for value seconds  -->
-    <button action="play" value="37">Shine</button>
     
-    ·
-
+    <!--   Plays the sound for value seconds  -->
+    <sup>Play</sup>
+    <button action="play" value="37">Shine</button>
+    <br>
+    
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
     
 <!--    ·-->
     
-<!--    <button action="changeAudio" value="sounds/angel.wav">Hymn</button>-->
     
-    ·
     
+    <sup>Radiate</sup>
     <button action="changeHue">Radiate</button>
     
 
     <!--  Volume slider  -->
+    <sup>Volume</sup>
     <input type="range" id="volume" min="0" max="1" step="0.05" value="0.5"> <span volume>1</span>
     
 
@@ -75,7 +77,7 @@ var Identity = "star";
 
 <!--  MODIFY THE OBJECT HERE... -->
 <script type="text/javascript">
-// Specify range of where object can appear
+// Specify range of where object can appear, from 0(%) to 100(%)
 let LeftMin = 0; let LeftMax = 90;
 let TopMin = 40; let TopMax = 55;
   
