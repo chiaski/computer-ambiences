@@ -54,8 +54,14 @@
     <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
+    <button action="preservePitch">Preserve Pitch</button>
     
+    <!-- Change visuals -->
+    <sup>Look</sup>
+    <button action="grow" value="0.1">Grow</button>
+    <button action="flip">Flip</button>
 
+    
     <!--  Volume slider  -->
     <sup>Vol</sup>
     <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
@@ -92,10 +98,22 @@ var Actions = {
     Actions.play(seconds);
     
   },
-  "tempo": function(intensity){
-    let currentRate = $("audio")[0].playbackRate;    
-    $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
+  // Preserve the pitch, toggles 
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
   },
+  
+  
+  // Change the sound file
+  "changeAudio": function(song){
+    changeAudio(song);
+  },
+  // Change the image file
+  "changeImage": function(image){
+    changeImage(image);
+  },
+
   
   // visuals
   "grow": function(intensity){
@@ -106,7 +124,20 @@ var Actions = {
                                 
     $("#object").css("transform", "scale(" + (currScale + parseFloat(intensity)) +")")
     
+  },
+                                
+  "flip": function(){
+    var isFlipped = $("#object").data('flipped') === 'true';
+
+    if (isFlipped) {
+        $("#object").css('transform', 'scaleX(1)');
+        $("#object").data('flipped', 'false');
+    } else {
+        $("#object").css('transform', 'scaleX(-1)');
+        $("#object").data('flipped', 'true');
+    }
   }
+  
   
 }
   
