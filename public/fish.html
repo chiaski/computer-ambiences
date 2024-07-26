@@ -106,6 +106,16 @@ var Actions = {
   },
   
   
+  // Change the sound file
+  "changeAudio": function(song){
+    changeAudio(song);
+  },
+  // Change the image file
+  "changeImage": function(image){
+    changeImage(image);
+  },
+
+  
   // visuals
   "grow": function(intensity){
     
@@ -115,7 +125,19 @@ var Actions = {
                                 
     $("#object").css("transform", "scale(" + (currScale + parseFloat(intensity)) +")")
     
+  },                          
+  "flip": function(){
+    var isFlipped = $("#object").data('flipped') === 'true';
+
+    if (isFlipped) {
+        $("#object").css('transform', 'scaleX(1)');
+        $("#object").data('flipped', 'false');
+    } else {
+        $("#object").css('transform', 'scaleX(-1)');
+        $("#object").data('flipped', 'true');
+    }
   }
+  
   
 }
   
@@ -126,11 +148,21 @@ var Actions = {
 var Reactions = {
   "raincloud": {
     "play": function(){
-      // If it rains, mkae the fish bloom
+      // If it rains, mkae the fish go
       Actions.play(12);
       
     }
-  }
+  },
+  "tide": {
+    "flip": function(){
+      // If the tides go, the fish also go
+      Actions.flip();
+    },
+    "grow": function(){
+      // If the tides go, the fish also go
+      Actions.grow(1.01); 
+    },
+  },
 }
 
 

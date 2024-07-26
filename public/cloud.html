@@ -117,6 +117,11 @@ var Actions = {
   "changeAudio": function(song){
     changeAudio(song);
   },
+  // Change the image file
+  "changeImage": function(image){
+    changeImage(image);
+  },
+
 
   // Change the color of the object
   "changeHue": function(intensity){
@@ -136,6 +141,12 @@ var Reactions = {
     "play": function(){
       Actions.changeAudio("sounds/cloud_2.wav");
       Actions.play(8);
+    }
+  },
+  "bird": {
+    "play": function(){
+      Actions.changeAudio("sounds/cloud_1.wav");
+      Actions.playNtimes(1);
     }
   }
 }

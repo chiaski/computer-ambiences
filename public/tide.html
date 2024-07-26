@@ -56,6 +56,7 @@
     <button action="preservePitch">Preserve Pitch</button>
     
     <sup>Visuals</sup>
+    <button action="grow" value="1.01">Grow</button>
     <button action="flip">Flip</button>
 
     <br>
@@ -113,6 +114,16 @@ var Actions = {
     $("audio")[0].preservesPitch = !preserves;
   },
   
+  
+  // Change the sound file
+  "changeAudio": function(song){
+    changeAudio(song);
+  },
+  // Change the image file
+  "changeImage": function(image){
+    changeImage(image);
+  },
+
   
   // visuals
   "grow": function(intensity){

@@ -30,7 +30,7 @@ var Identity = "tree";
  
   <!-- SOUND FILE -->
   <audio loop>
-    <source src="sounds/mellowtron.wav">
+    <source src="sounds/hmmm.wav">
   </audio>
   
 
@@ -135,7 +135,13 @@ var Reactions = {
     "play": function(){
       Actions.play(8);
     }
-  }
+  },
+  "flower": {
+    "tempo": function(){
+      // If hte flower changes tempo, play for a bit
+      Actions.play(4);
+    }
+  },
 }
 
 

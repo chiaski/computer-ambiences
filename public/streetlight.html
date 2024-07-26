@@ -44,16 +44,19 @@
   <div id="actions">
     
     <!--   Plays the sound for value seconds  -->
-    <button action="play" value="120">Shine</button>
+    <button action="play" value="30">Play</button>
     
-    ·
+<br>
 
     <!--   Adjusts the tempo/speed  -->
+    <sup>Speed</sup>
     <button action="tempo" value="-0.05">Slow</button>
     <button action="tempo" value="+0.05">Speed</button>
-    ·
+    <button action="preservePitch">Preserve Pitch</button>
+
     
     <!--  Volume slider  -->
+    <sup>Volume</sup>
     <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7"> <span volume>1</span>
   </div>
   
@@ -93,6 +96,13 @@ var Actions = {
     $("audio")[0].playbackRate = currentRate + parseFloat(intensity);
   },
   
+  // Preserve the pitch, toggles 
+  "preservePitch": function(){
+    let preserves = $("audio")[0].preservesPitch;    
+    $("audio")[0].preservesPitch = !preserves;
+  },
+  
+  
   // Change the sound file
   "changeAudio": function(song){
     changeAudio(song);
@@ -110,6 +120,11 @@ var Actions = {
                                 
     $("#object").css("transform", "scale(" + (currScale + parseFloat(intensity)) +")")
     
+  },
+  // Change the color of the object
+  "changeHue": function(intensity){
+    // Changes the color of the object
+    $("#object").css(`filter`, `hue-rotate(${randInt(0,300)}deg)`);
   }
   
 }
@@ -119,6 +134,12 @@ var Actions = {
 // What affects my object...
     
 var Reactions = {
+  "tree": {
+    "changeHue": function(){
+      // If hthe trees change color, slow yourself
+      Actions.tempo(-0.02);
+    }
+  },
                                 
 }
 
